@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>codeBase - Aula 001: A Bola Suicida</title>
+
+  <style>
+    /* 1. PALCO E ALINHAMENTO DA PÁGINA */
+    body {
+      background-color: #121214;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* 2. A ARENA ONDE O JOGO ACONTECE */
+    #arena {
+      width: 600px;
+      height: 300px;
+      background-color: #202024;
+      border: 2px solid #41414d;
+      position: relative; /* Âncora para posicionar o herói lá dentro */
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    /* 3. O HERÓI (BOLA SUICIDA) */
+    #heroi {
+      width: 40px;
+      height: 40px;
+      background-color: #8257e5;
+      border-radius: 50%; /* Transforma o quadrado em círculo */
+      position: absolute;
+      left: 50px;
+      bottom: 20px;       /* Distância do chão da arena */
+      cursor: pointer;
+      transition: bottom 0.1s; /* Suaviza a subida do pulo */
+    }
+
+    /* 4. HUD (PLACAR DE STATUS) */
+    #hud {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Placar que mostra o HP do herói -->
+  <div id="hud">
+    <span>Vida do Herói: <strong id="texto-vida">100</strong> HP</span>
+  </div>
+
+  <!-- Arena contendo o elemento do Herói -->
+  <div id="arena">
+    <div id="heroi" onclick="executarPuloSuicida()"></div>
+  </div>
+
+  <script>
+    // ESTADO DO JOGO EM VARIÁVEIS
+    let vida = 100;
+    let posicaoY = 20;
+
+    // Ação disparada quando o jogador clica na Bola Suicida
+    function executarPuloSuicida() {
+      // Pega a referência dos elementos HTML
+      let elementoHeroi = document.getElementById("heroi");
+      let elementoTextoVida = document.getElementById("texto-vida");
+
+      // 1. Faz o herói subir na tela
+      posicaoY = 100;
+      elementoHeroi.style.bottom = posicaoY + "px";
+      
+      // 2. Aplica o dano no herói (perde 25 HP)
+      vida = vida - 25;
+
+      // 3. Valida se a vida acabou (Game Over)
+      if (vida <= 0) {
+        vida = 0;
+        elementoHeroi.style.backgroundColor = "#e83f5b"; // Muda para cor vermelha
+        alert("☠️ A Bola Suicida pulou e acabou com toda a vida!");
+      }
+
+      // 4. Atualiza o texto da vida na tela
+      elementoTextoVida.innerText = vida;
+
+      // 5. Após 200 milissegundos, faz o herói cair de volta
+      setTimeout(function() {
+        if (vida > 0) {
+          posicaoY = 20;
+          elementoHeroi.style.bottom = posicaoY + "px";
+        }
+      }, 200);
+    }
+  </script>
+</body>
+</html>
