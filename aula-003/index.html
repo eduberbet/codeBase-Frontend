@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Define a codificação de caracteres para acentos e símbolos especiais -->
+  <meta charset="UTF-8">
+  <title>codeBase - Aula 003: Indicadores de Estado e Barras de Vida Dynamic</title>
+
+  <style>
+    /* 1. PALCO E ALINHAMENTO DA PÁGINA */
+    body {
+      background-color: #121214;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* 2. HUD (PLACAR DE STATUS E BOTÕES) */
+    #hud {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      display: flex;
+      gap: 15px;          /* Espaçamento automático entre os elementos do HUD */
+      align-items: center;
+    }
+
+    /* NOVO (Aula 003): Contêiner moldura da barra de vida */
+    #barra-container {
+      width: 200px;
+      height: 20px;
+      background-color: #41414d;
+      border-radius: 10px;
+      overflow: hidden;   /* NOVO: Esconde qualquer preenchimento que saia da borda arredondada */
+      border: 2px solid #7c7c8a;
+    }
+
+    /* NOVO (Aula 003): Preenchimento interno colorido da barra */
+    #barra-vida {
+      width: 100%;        /* Inicia com 100% de largura (HP Cheio) */
+      height: 100%;
+      background-color: #04d361; /* Verde inicial */
+      /* NOVO: Animação fluida de CSS para largura e cor alteradas via JS */
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Estilização do botão de cura */
+    #btn-curar {
+      background-color: #04d361;
+      color: #000000;
+      border: none;
+      padding: 8px 16px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    #btn-curar:hover {
+      background-color: #00b352;
+    }
+
+    #btn-curar:disabled {
+      background-color: #41414d;
+      color: #7c7c8a;
+      cursor: not-allowed;
+    }
+
+    /* 3. A ARENA ONDE O JOGO ACONTECE */
+    #arena {
+      width: 600px;
+      height: 300px;
+      background-color: #202024;
+      border: 2px solid #41414d;
+      position: relative; /* Âncora para o posicionamento do herói */
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    /* 4. O HERÓI (A BOLA SUICIDA) */
+    #heroi {
+      width: 40px;
+      height: 40px;
+      background-color: #8257e5;
+      border-radius: 50%;
+      position: absolute;
+      left: 50px;
+      bottom: 20px;       /* Posição inicial no chão da arena */
+      cursor: pointer;
+      transition: bottom 0.1s;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Placar contendo a nova Barra de Vida CSS e o botão de cura -->
+  <div id="hud">
+    <!-- NOVO (Aula 003): Substituição do texto de HP pela estrutura de barra aninhada -->
+    <div id="barra-container">
+      <div id="barra-vida"></div>
+    </div>
+    <button id="btn-curar" onclick="curarHeroi()">Usar Poção (+25 HP)</button>
+  </div>
+
+  <!-- Arena de jogo contendo o elemento do herói -->
+  <div id="arena">
+    <div id="heroi" onclick="executarPuloSuicida()"></div>
+  </div>
+
+  <script>
+    // ESTADO DO JOGO EM VARIÁVEIS
+    let vida = 100;
+    let maxVida = 100;
+    let posicaoY = 20;
+
+    // Ação do pulo com trava de segurança contra o "Bug do Defunto"
+    function executarPuloSuicida() {
+      if (vida > 0) {
+        let elementoHeroi = document.getElementById("heroi");
+
+        // 1. Faz o herói subir (Pulo)
+        posicaoY = 100;
+        elementoHeroi.style.bottom = posicaoY + "px";
+        
+        // 2. Aplica o dano usando o atalho de subtração (-=)
+        vida -= 25;
+
+        // 3. Checa se a vida zerou (Condição de Morte)
+        if (vida <= 0) {
+          vida = 0;
+          elementoHeroi.style.backgroundColor = "#e83f5b"; // Vermelho de derrota
+          document.getElementById("btn-curar").disabled = true;
+          alert("☠️ Game Over! O Herói morreu e não pode mais pular nem se curar.");
+        }
+
+        // 4. NOVO (Aula 003): Atualiza a barra de vida gráfica via função
+        atualizarBarraVida();
+
+        // 5. Retorna o herói ao chão após 200ms
+        setTimeout(function() {
+          if (vida > 0) {
+            posicaoY = 20;
+            elementoHeroi.style.bottom = posicaoY + "px";
+          }
+        }, 200);
+
+      } else {
+        console.log("🚫 Ação ignorada: O Herói está morto.");
+      }
+    }
+
+    // Função de cura da vida do herói
+    function curarHeroi() {
+      if (vida > 0 && vida < maxVida) {
+        vida += 25;
+
+        if (vida > maxVida) {
+          vida = maxVida;
+        }
+
+        // NOVO (Aula 003): Atualiza a barra visual após a cura
+        atualizarBarraVida();
+        console.log("💚 Herói curado! HP atual: " + vida);
+      }
+    }
+
+    // NOVA FUNÇÃO (Aula 003): Calcula a porcentagem e atualiza a largura e cor da barra CSS
+    function atualizarBarraVida() {
+      let elementoBarra = document.getElementById("barra-vida");
+      
+      // Normalização Matemática: converte qualquer escala de vida para 0-100%
+      let porcentagem = (vida / maxVida) * 100;
+
+      // Aplica a nova largura no DOM no formato de porcentagem
+      elementoBarra.style.width = porcentagem + "%";
+
+      // Estrutura condicional encadeada (else if) para trocar a cor do indicador visual
+      if (porcentagem > 60) {
+        elementoBarra.style.backgroundColor = "#04d361"; // Verde (Saudável)
+      } else if (porcentagem > 25) {
+        elementoBarra.style.backgroundColor = "#fba94c"; // Amarelo/Laranja (Atenção)
+      } else {
+        elementoBarra.style.backgroundColor = "#e83f5b"; // Vermelho (Perigo Crítico)
+      }
+    }
+  </script>
+</body>
+</html>
