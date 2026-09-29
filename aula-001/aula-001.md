@@ -5,9 +5,9 @@
 
 ### 1. Introdução: O Desafio do Herói Estático
 
-Seja bem-vindo ao **codeBase-frontend**! Nesta primeira aula, vamos iniciar o nosso jogo. 
+Seja bem-vindo ao **codeBase-frontend**!  
 
-Imagine que você foi contratado para criar um jogo de plataforma 2D em HTML5. Para começar você precisa colocar o primeiro personagem na tela e fazer com que ele reaja quando o jogador clica nele. 
+Imagine que você quer criar um jogo de plataforma 2D em HTML5. Para começar você precisa colocar o primeiro personagem na tela e fazer com que ele reaja quando o jogador clica nele. 
 
 **O Nosso Problema Hoje:**
 Se você usar apenas um documento de texto tradicional no navegador, a página fica 100% estática. É como tentar jogar um videogame onde os botões do controle não fazem nada. Como fazemos o computador desenhar o herói, posicioná-lo no chão de uma arena e responder aos nossos cliques de mouse em tempo real?
@@ -23,15 +23,46 @@ Antes de qualquer coisa é importante explicar o que é o que vamos estudar. De 
 Para construir qualquer Frontend na internet, o mercado usa uma trinca inseparável de tecnologias:
 
 #### HTML (HyperText Markup Language): 
-É a Estrutura (O Esqueleto). Ele define o que existe na tela. É o HTML que diz: "aqui fica uma caixa, aqui fica um texto e aqui fica um botão".
+É a Estrutura (O Esqueleto). Ele define o que existe na tela. É o HTML que diz: "aqui fica uma caixa, aqui fica um texto e aqui fica um botão". É quivalente a um texto digitado em um bloco de notas simples que você não edita. 
 
 #### CSS (Cascading Style Sheets):
- É a Aparência (A Estética). Ele define como as coisas se parecem. É o CSS que dá cor ao fundo, arredonda o herói para virar um círculo e centraliza o jogo na tela.
+ É a Aparência (A Estética). Ele define como as coisas se parecem. É o CSS que dá cor ao fundo, arredonda o herói para virar um círculo e centraliza o jogo na tela. É no CSS que editamos o arquivo simples (html). Podemos definir tamanho, cor, fundo...
 
 #### JavaScript (JS): 
-É a Interatividade (O Cérebro). Ele define como as coisas funcionam. É o JS (normalmente abreviamos o nome javascript para JS) que calcula quanta vida o herói tem, percebe o clique do mouse e faz o personagem pular.
+É a Interatividade (O Cérebro). Ele define como as coisas funcionam. É o JS (normalmente abreviamos o nome javascript para JS) que calcula quanta vida o herói tem, percebe o clique do mouse e faz o personagem pular. Ele que torna o conjunto de CSS e HTML deixarem de ser uma pagina estática (literalmente como uma pagina impressa) e torna ela dinamica e que você interaje. Dos três, esta é a unica que é uma linguagem de programação.
 
 Sem o HTML, você não tem o que mostrar. Sem o CSS, tudo fica parecendo um documento de texto branco e feio dos anos 90. Sem o JavaScript, nada se move e os botões não fazem nada.
+
+### 2.1 ❓ Mas afinal... O que é uma Linguagem de Programação?
+
+Para entender a diferença, imagine que você está dando ordens para dois assistentes bem diferentes:
+
+O Assistente Decorador (HTML e CSS — Linguagens de Marcação e Estilo):
+Você diz para ele: "Coloque uma mesa redonda no meio da sala e pinte de azul." Ele vai lá e coloca. Se você não der novas ordens, a mesa vai ficar lá parada para sempre. Ele não toma decisões, não faz contas e não reage a nada sozinho. Ele apenas descreve como as coisas devem ser. O HTML marca onde as coisas ficam (Marcação). O CSS diz como as coisas se parecem (Estilo). Nenhum dos dois pensa.
+
+O Assistente Inteligente (JavaScript — Linguagem de Programação):
+
+Você diz para ele: "Fique olhando para a porta. SE alguém passar de camisa vermelha, ENTÃO você conta +1 no seu caderno. ENQUANTO a sala tiver menos de 10 pessoas, continue deixando entrarem. Se passar de 10, feche a porta!" Percebeu a diferença? O assistente inteligente faz tomada de decisões, cálculos, repetições e reage a eventos do mundo real.
+
+#### 🚫 Por que HTML e CSS NÃO são linguagens de programação?
+Para uma tecnologia ser considerada uma linguagem de programação de verdade, ela precisa ter os três pilares do pensamento lógico:
+
+##### Tomada de Decisão (Condicionais): 
+Capacidade de fazer SE... ENTÃO... SENÃO... (Ex: Se a vida do Herói chegar a 0, mostre Game Over). O HTML/CSS não consegue decidir isso sozinho.
+
+##### Memória de Variáveis (Estado): 
+Capacidade de guardar um valor na RAM e alterar depois (Ex: Vida Atual = 100; toma 25 de dano; Vida Atual vira 75). O HTML/CSS é estático; ele só exibe o valor fixo que você escreveu no texto.
+
+##### Repetição e Automação (Laços/Loops): 
+Capacidade de repetir uma ação 1.000 vezes em um piscar de olhos sem você precisar digitar 1.000 linhas de código.
+
+💡 Em resumo:
+
+HTML é uma linguagem de Marcação (cria a estrutura).
+
+CSS é uma linguagem de Estilo (cria o visual).
+
+JavaScript é a Linguagem de Programação (cria a lógica, a vida e as decisões do seu jogo).
 
 ### 3. `glossario.tech` (As Peças da Aula)
 

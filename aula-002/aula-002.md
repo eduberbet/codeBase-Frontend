@@ -29,9 +29,28 @@ Além disso, nosso herói só perde vida, sem nenhuma forma de se recuperar. Com
 
 Vamos refatorar o arquivo `index.html` que criamos na Aula 001 utilizando **Estruturas Condicionais (`if` / `else`)**, **Operadores Lógicos** e o nosso primeiro botão!
 
+### 2. CONDICIONAIS — O Primeiro Cérebro do seu Jogo
+
+Lembra na **Aula 001** quando dissemos que o HTML e o CSS são assistentes passivos que não pensam, e que só o JavaScript é a linguagem de programação de verdade porque consegue tomar decisões?
+
+Hoje vamos dar ao seu jogo o primeiro "cérebro" real! Vamos ensinar o programa a tomar uma decisão fundamental de qualquer jogo 2D: **SE a vida do Herói chegar a zero, ENTÃO é Game Over; SENÃO, ele continua vivo!**
+
+Por padrão, a execução de um código de computador funciona em **ordem sequencial** — exatamente como você lendo um livro ou uma notícia: linha por linha, de cima para baixo. Quando colocamos uma **condicional**, nós interrompemos essa leitura reta e criamos desvios no caminho (chamados de *bifurcações* ou *estruturas de controle*).
+
+No JavaScript, fazemos isso principalmente de duas formas básicas:
+
+#### 🧱 A Condicional Simples: `if (condição) { o que fazer }`
+Neste caso, o bloco de código só é executado **SE** a condição for verdadeira (*true*). Se a condição for falsa (*false*), o JavaScript simplesmente ignora o bloco entre chaves e continua lendo o código normalmente nas linhas de baixo.
+
+#### 🔀 A Condicional Composta: `if (condição) { o que fazer } else { faz outra coisa }`
+Aqui o fluxo ganha dois caminhos possíveis. Caso a condição seja **verdadeira**, o JavaScript executa o bloco `o que fazer` e **ignora totalmente** o `faz outra coisa`. Se a condição for **falsa**, acontece exatamente o contrário: o primeiro bloco é ignorado e o JavaScript executa direto o `faz outra coisa`.
+
+#### ⏳ Outros casos mais complexos:
+Por hoje, dominar essa ideia de `if` e `else` é mais do que suficiente! Releia, pratique o código no seu editor e fixe o conceito. Nas próximas aulas, conforme o nosso Herói ganhar novas habilidades, apresentaremos lógicas de condicionais mais avançadas (como testar várias condições ao mesmo tempo).
+
 ---
 
-### 2. `glossario.tech` (Novidades da Aula 002)
+### 3. `glossario.tech` (Novidades da Aula 002)
 
 > 💡 *Nota: Consulte os glossários anteriores sempre que precisar relembrar tags, propriedades ou comandos já ensinados.*
 
@@ -54,7 +73,7 @@ Vamos refatorar o arquivo `index.html` que criamos na Aula 001 utilizando **Estr
 
 ---
 
-### 3. Passo a Passo da Refatoração
+### 4. Passo a Passo da Refatoração
 
 Abra o arquivo `index.html` e aplique os ajustes usando os blocos de código abaixo como referência.
 
@@ -185,7 +204,7 @@ No seu <script>, substitua o bloco existente pelas novas validações:
 
 ##### Caso tenha ficado com alguma duvida, compare o seu arquivo final com o arquivo final da aula.
 
-### 4. Desafio Prático
+### 5. Desafio Prático
 Abra o seu arquivo index.html modificado no navegador e tente fazer estas edições:
 
 Mude a variável maxVida para 150 e a vida inicial para 150.
@@ -194,13 +213,21 @@ Altere a função curarHeroi() para recuperar apenas 10 de HP por clique (vida +
 
 Tente criar um segundo botão no HTML que enche a vida toda do herói de uma vez só!
 
-### 5.🔥 Aprofundamento Hardcore (Bastidores da Engenharia)
+### 6. 🔥 Aprofundamento Hardcore (Bastidores da Engenharia)
 
-#### A- Avaliação Curto-Circuito (Short-Circuit Evaluation)
-Na função de cura, usamos a expressão if (vida > 0 && vida < maxVida). O operador lógico && (E) utiliza uma otimização no motor JS chamada Curto-Circuito: se a primeira condição (vida > 0) for falsa, o navegador nem perde tempo avaliando a segunda parte (vida < maxVida). O código pula o bloco imediatamente, economizando ciclos de processamento.
+#### A - Tipagem Dinâmica e Coerção de Tipos (*Type Coercion*)
+No JavaScript, variáveis criadas com `let` não possuem um tipo fixo atrelado à sua declaração — o tipo pertence ao **valor** guardado na memória RAM. 
+* **Coerção Implícita:** Quando fazemos `"HP: " + vida`, o motor do JS percebe a presença da string e converte o número `vida` em texto automaticamente para concatenar.
+* **O Perigo das Operações:** Se tentarmos somar `let vida = "100" + 25`, o JS gera `"10025"` (texto), enquanto `"100" - 25` resulta em `75` (número). Garantir que variáveis numéricas guardem tipos `Number` puros é essencial para evitar o "Bug da Vida Infinita".
 
-#### B- O Estado no DOM vs. O Estado na Memória JS
-A variável maxVida controla as regras do jogo na memória RAM. O texto <strong id="texto-vida"> é apenas um reflexo visual. Tentar controlar a regra lendo o texto desenhado na tela (innerText) é uma péssima prática chamada de DOM-driven state. No codeBase, mantemos a Fonte Única da Verdade (Single Source of Truth) sempre em variáveis JavaScript.
+#### B - Operadores Lógicos e Avaliação Curto-Circuito (*Short-Circuit Evaluation*)
+Ao validar a cura com `if (vida > 0 && vida < maxVida)`, usamos o operador lógico `&&` (E Lógico). 
+O motor JS otimiza essa checagem na memória através do **Curto-Circuito**: se a primeira expressão (`vida > 0`) for avaliada como `false`, o processador interrompe a leitura e **nem perde tempo avaliando a segunda parte** (`vida < maxVida`). O bloco é ignorado instantaneamente, economizando ciclos de processamento na CPU.
 
-#### C- A Árvore de Eventos e a Propriedade disabled
-Quando definimos btnCurar.disabled = true, o navegador remove o nó dos ouvintes do manipulador de eventos de clique no nível da Render Tree. Isso garante que, mesmo se um usuário tentar disparar a função de cura pelo console do navegador, a checagem interna if (vida > 0) impedirá a execução do código de forma totalmente segura.
+#### C - O Estado na Memória JS vs. O Estado no DOM
+As variáveis `vida` e `maxVida` mantêm as regras de negócio puras na memória RAM. A tag `<span id="texto-vida">` é apenas um reflexo visual para o jogador. 
+Tentar controlar o estado do jogo lendo o texto exibido na tela (`innerText`) é uma péssima prática conhecida como *DOM-driven state*. No **codeBase**, aplicamos o padrão de engenharia da **Fonte Única da Verdade** (*Single Source of Truth - SSOT*): a lógica reside 100% no JavaScript, e o DOM apenas obedece.
+
+#### D - A Árvore de Eventos e a Propriedade `disabled`
+Quando executamos `btnCurar.disabled = true`, o navegador desativa visualmente o botão e bloqueia a emissão de eventos de clique no nível da *Render Tree*. 
+Contudo, um jogador mal-intencionado poderia tentar invocar a função `curarHeroi()` diretamente pelo Console do Desenvolvedor. Por isso, a trava de segurança dupla com o `if (vida > 0)` dentro da função JS garante que a regra seja respeitada mesmo sob tentativas de manipulação externa.
