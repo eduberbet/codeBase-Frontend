@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>codeBase - Aula 005: Controles de Teclado, Movimentação 2D e Acessibilidade</title>
+  
+  <!-- Conecta a folha de estilos CSS externa -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Painel de Identificação do Jogador (Formulário) -->
+  <div id="painel-inicial">
+    <label for="input-nome">Nome do Herói:</label>
+    <input type="text" id="input-nome" placeholder="Digite o nome..." value="Valente">
+    <button id="btn-iniciar" onclick="confirmarNome()">Confirmar Nome</button>
+  </div>
+
+  <!-- HUD (Placar de Status e Ações) -->
+  <div id="hud">
+    <span id="label-heroi">Herói: Valente</span>
+    
+    <!-- Contêiner gráfico da Barra de Vida CSS -->
+    <div id="barra-container">
+      <div id="barra-vida"></div>
+    </div>
+    
+    <button id="btn-curar" onclick="curarHeroi()">Usar Poção (+25 HP)</button>
+  </div>
+
+  <!-- Arena de jogo contendo o elemento do herói -->
+  <div id="arena">
+    <div id="heroi" onclick="executarPuloSuicida()"></div>
+  </div>
+
+  <!-- NOVO (Aula 005): Painel de Acessibilidade e Configurações -->
+  <div id="painel-acessibilidade">
+    <div class="campo-config">
+      <label for="slider-brilho">Brilho da Arena:</label>
+      <input type="range" id="slider-brilho" min="0.2" max="1" step="0.1" value="1">
+    </div>
+
+    <div class="campo-config">
+      <label for="check-narrador">Modo Narrador (Console):</label>
+      <input type="checkbox" id="check-narrador">
+    </div>
+  </div>
+
+  <!-- Importa o arquivo de lógica JS externo no final do body -->
+  <script src="script.js"></script>
+</body>
+</html>

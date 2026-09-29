@@ -1,0 +1,145 @@
+/* 1. PALCO E ALINHAMENTO DA PÁGINA */
+body {
+  background-color: #121214;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* CLASSE UTILITÁRIA SPA */
+.oculto {
+  display: none !important;
+}
+
+/* 2. PAINÉIS DE MENU E GAME OVER */
+#painel-menu, #painel-game-over {
+  background-color: #202024;
+  padding: 20px 30px;
+  border-radius: 8px;
+  border: 1px solid #41414d;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  min-width: 300px;
+}
+
+.campo-config {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+#input-nome {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #7c7c8a;
+  background-color: #121214;
+  color: #ffffff;
+}
+
+#btn-iniciar, #btn-reiniciar {
+  background-color: #8257e5;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#btn-iniciar:hover, #btn-reiniciar:hover {
+  background-color: #996dff;
+}
+
+/* 3. HUD E BARRA DE VIDA */
+#hud {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+#barra-container {
+  width: 180px;
+  height: 20px;
+  background-color: #41414d;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #7c7c8a;
+}
+
+#barra-vida {
+  width: 100%;
+  height: 100%;
+  background-color: #04d361;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+#btn-curar {
+  background-color: #04d361;
+  color: #000000;
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#btn-curar:disabled {
+  background-color: #41414d;
+  color: #7c7c8a;
+  cursor: not-allowed;
+}
+
+/* 4. ARENA VIEWPORT (600px) E PISTA (1800px) */
+#arena {
+  width: 600px;
+  height: 300px;
+  background-color: #202024;
+  border: 2px solid #41414d;
+  position: relative;
+  overflow-x: hidden; /* Câmera via JS */
+  overflow-y: hidden;
+  border-radius: 8px;
+  transition: opacity 0.2s ease;
+}
+
+#pista {
+  width: 1800px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(90deg, #202024 0%, #18181b 100%);
+}
+
+#heroi {
+  width: 40px;
+  height: 40px;
+  background-color: #8257e5;
+  border-radius: 50%;
+  position: absolute;
+  left: 50px;
+  bottom: 20px;
+}
+
+/* OBSTÁCULO FIXO NA PISTA */
+#obstaculo {
+  width: 35px;
+  height: 50px;
+  background-color: #e83f5b;
+  border-radius: 4px;
+  position: absolute;
+  left: 800px; /* Posição fixa de propósito */
+  bottom: 20px;
+  border: 2px solid #ffffff;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>codeBase - Aula 006: Arquitetura SPA, Física Simultânea e Obstáculo Fixo</title>
+  
+  <!-- Conecta a folha de estilos CSS externa -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TELA 1: MENU INICIAL E CONFIGURAÇÕES (SPA View 1) -->
+  <div id="painel-menu">
+    <h2>🎮 Configurações da Partida</h2>
+    
+    <div class="campo-config">
+      <label for="input-nome">Nome do Herói:</label>
+      <input type="text" id="input-nome" placeholder="Digite o nome..." value="Valente">
+    </div>
+
+    <div class="campo-config">
+      <label for="slider-brilho">Brilho da Arena:</label>
+      <input type="range" id="slider-brilho" min="0.2" max="1" step="0.1" value="1">
+    </div>
+
+    <button id="btn-iniciar" onclick="iniciarJogo()">⚔️ Iniciar Corrida</button>
+  </div>
+
+  <!-- TELA 2: HUD E ARENA (SPA View 2 - Ativas em Jogo) -->
+  <div id="hud" class="oculto">
+    <span id="label-heroi">Herói: Valente</span>
+    
+    <div id="barra-container">
+      <div id="barra-vida"></div>
+    </div>
+    
+    <button id="btn-curar" onclick="curarHeroi()">Usar Poção (+25 HP)</button>
+  </div>
+
+  <!-- Viewport da Arena (600px) contendo a Pista Extensa (1800px) -->
+  <div id="arena" class="oculto">
+    <div id="pista">
+      <div id="heroi"></div>
+      <!-- Obstáculo FIXO na posição 800px (Proposital para criar a dor da monotonia) -->
+      <div id="obstaculo"></div>
+    </div>
+  </div>
+
+  <!-- TELA 3: PAINEL DE GAME OVER (SPA View 3) -->
+  <div id="painel-game-over" class="oculto">
+    <h2>☠️ GAME OVER</h2>
+    <p id="msg-derrota"></p>
+    <button id="btn-reiniciar" onclick="reiniciarParaMenu()">🔄 Voltar ao Menu Inicial</button>
+  </div>
+
+  <!-- Importa a lógica JS no final do body -->
+  <script src="script.js"></script>
+</body>
+</html>
