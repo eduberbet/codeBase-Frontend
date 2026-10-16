@@ -16,8 +16,33 @@ Hoje vamos dar vida completa ao Herói:
 3. **Painel de Acessibilidade e Configurações:** Construiremos um painel de controles com componentes nativos (`<input type="range">` para brilho e `<input type="checkbox">` para modo narrador).
 
 ---
+### 2. O que é Acessibilidade (a11y) no Desenvolvimento Web e nos Jogos?
 
-### 2. `glossario.tech` (Novidades da Aula 005)
+Você já tentou jogar um jogo em que os botões não mostravam o foco ao usar a tecla Tab, ou onde o contraste do texto era tão baixo que deixava os olhos cansados em dois minutos? Isso é um problema de **Acessibilidade Web** (frequentemente abreviada pelo numerônimo **a11y** — onde o *11* representa as 11 letras entre o 'a' e o 'y' da palavra em inglês *Accessibility*).
+
+Garantir acessibilidade significa criar interfaces e jogos que possam ser **percebidos, compreendidos, navegados e utilizados por qualquer pessoa**, incluindo pessoas com deficiências visuais, motoras, auditivas ou cognitivas.
+
+#### 🎮 Como a Acessibilidade se aplica ao nosso Jogo 2D?
+
+No nosso contexto da Aula 005, aplicamos a acessibilidade em três frentes fundamentais:
+
+1. **Semântica HTML e Leitores de Tela:**
+   Em vez de usar uma `<div>` genérica para criar um botão e colocar um clique nela, usamos a tag nativa `<button>`. O navegador já entende automaticamente que um `<button>` é clicável, aceita foco via teclado e avisa leitores de tela (como o NVDA ou TalkBack): *"Isso é um botão para curar o herói"*.
+
+2. **Navegação por Teclado (Keyboard Focus):**
+   Nem todo mundo usa mouse ou touch. Um jogador com limitação motora ou que prefira atalhos precisa conseguir navegar pelos botões do menu usando apenas a tecla `Tab` e acioná-los com `Space` ou `Enter`.
+
+3. **Contraste de Cores e Feedback Sonoro/Visual:**
+   A barra de vida verde sobre um fundo escuro não é só estética — é garantir um **contraste visual alto** para que pessoas com daltonismo ou baixa visão saibam exatamente quanta vida o Herói ainda tem.
+
+> 💡 **Conselho do Sensei:** 
+> Escrever código acessível não beneficia apenas pessoas com deficiência. Um jogo que aceita atalhos de teclado e tem botões claros é mais gostoso e intuitivo para **TODOS** os jogadores. Pensar em acessibilidade desde o início é a marca registrada de um desenvolvedor profissional!
+
+Sobre este assunto, iremos realizar novas implementações em aulas futuras.
+
+---
+
+### 3. `glossario.tech` (Novidades da Aula 005)
 
 > 💡 *Nota: Consulte os glossários das Aulas anteriores sempre que precisar relembrar seletores, tags ou funções passadas.*
 
@@ -37,7 +62,7 @@ Hoje vamos dar vida completa ao Herói:
 
 ---
 
-### 3. Passo a Passo da Refatoração
+### 4. Passo a Passo da Refatoração
 
 ---
 
@@ -182,17 +207,21 @@ function narrarAcao(texto) {
 }
 ```
 
-### 4. Desafio Prático
+### 5. Desafio Prático
 No script.js, altere a variável velocidade X para 30 e observe como o Herói passa a dar passos mais longos na arena.
 Tente adicionar uma trava no slider Brilho para que o brilho nunca caia abaixo de 0.2 (20%), evitando que a arena fique totalmente invisível na tela.
 
 ### 🔥 Aprofundamento Hardcore (Bastidores da Engenharia)
 
-#### A - Mapeamento de Teclas Físicas (event.code) vs Caracteres (event.key)
-Ao registrar eventos de teclado, o uso de event.code ("KeyA", "Space") identifica a posição física da tecla no teclado, independentemente do idioma ou layout configurado (ABNT2, US, Dvorak). Já a propriedade event.key retornaria a letra processada ("a", "A", "á"), o que poderia gerar falhas de movimentação se o usuário estivesse com a tecla Caps Lock ativada.
+#### A - Mapeamento Físico de Teclas (event.code) e Prevenção de Comportamento Padrão
+Ao escutar comandos do jogador, usamos event.code ("KeyW", "Space", "ArrowRight") em vez de event.key ("a", "A", "á").
+- Por que event.code? Identifica a posição física da tecla no hardware, ignorando layouts de teclado (ABNT2, US, Dvorak) ou estado de Caps Lock.
+- Interpretação de Eventos de Entrada: Usamos event.preventDefault() em teclas estratégicas (como a Barra de Espaço ou Setas) para evitar que o navegador execute o comportamento padrão de rolagem de página (scroll), mantendo a janela do jogo fixa e responsiva.
 #### B - Propagação de Eventos no DOM (Event Bubbling)
 Quando uma tecla é pressionada, o evento de teclado não nasce direto no elemento do Herói, mas sim no topo da hierarquia do navegador (window / document). O evento desce a árvore de nós e depois sobe (bubbling). Registrar o escutador em window garante que o jogo capturará os comandos do teclado independentemente de onde o foco de clique do mouse esteja na página.
-#### C - A Matemática das Colisões de Borda (Bounding Box Boundary)
-Para limitar a movimentação do herói à direita da arena em 560px, calculamos:
-$$\text{Posição Máxima} = \text{Largura da Arena} (600\text{px}) - \text{Largura do Herói} (40\text{px}) = 560\text{px}$$
-Sem essa subtração do diâmetro do próprio elemento, o herói ultrapassaria a borda direita antes de travar, expondo apenas sua metade na tela.
+#### C - Desempenho de Teclado: Key Repeat Delay vs. Mapeamento por State Object
+Disparar a movimentação do Herói direto no evento keydown gera uma movimentação "travada" e com um pequeno engasgo inicial. Isso acontece por conta do Key Repeat Delay — um atraso intencional do sistema operacional para evitar que a digitação de textos repita letras sem querer.
+
+- Solução de Alta Performance (60 FPS): Em vez de mover o Herói no keydown, o evento apenas marca uma flag true em um objeto de estado na memória RAM (ex: teclasPressionadas["KeyD"] = true). O Loop de Animação (requestAnimationFrame) consulta esse objeto a cada quadro e aplica o movimento suave e sem atraso de hardware.
+#### D - A Matemática das Colisões de Borda (Bounding Box Boundary)
+Para limitar a movimentação do Herói à direita da arena em $560\text{px}$, aplicamos a fórmula da caixa delimitadora:$$\text{Posição Máxima} = \text{Largura da Arena } (600\text{px}) - \text{Largura do Herói } (40\text{px}) = 560\text{px}$$Sem a subtração do diâmetro/largura do próprio elemento, o ponto de origem do elemento atinge a borda, fazendo metade do Herói "vazar" para fora da arena visual.
