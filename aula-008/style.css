@@ -1,0 +1,175 @@
+/* 1. PALCO E ALINHAMENTO DA PÁGINA */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #121214;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.oculto {
+  display: none !important;
+}
+
+/* 2. PAINÉIS DE MENU, GAME OVER E VITÓRIA */
+#painel-menu, #painel-game-over, #painel-vitoria {
+  background-color: #202024;
+  padding: 20px 30px;
+  border-radius: 8px;
+  border: 1px solid #41414d;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  min-width: 320px;
+}
+
+.campo-config {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+#input-nome {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #7c7c8a;
+  background-color: #121214;
+  color: #ffffff;
+}
+
+#btn-iniciar, #btn-reiniciar, #btn-vitoria {
+  background-color: #8257e5;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#btn-iniciar:hover, #btn-reiniciar:hover, #btn-vitoria:hover {
+  background-color: #996dff;
+}
+
+/* 3. HUD E BARRA DE VIDA */
+#hud {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+#barra-container {
+  width: 180px;
+  height: 20px;
+  background-color: #41414d;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #7c7c8a;
+}
+
+#barra-vida {
+  width: 100%;
+  height: 100%;
+  background-color: #04d361;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* 4. ARENA E PISTA */
+#arena {
+  width: 600px;
+  height: 300px;
+  background-color: #202024;
+  border: 2px solid #41414d;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-radius: 8px;
+}
+
+#pista {
+  width: 1800px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(90deg, #202024 0%, #18181b 100%);
+}
+
+#heroi {
+  width: 40px;
+  height: 40px;
+  background-color: #8257e5;
+  border-radius: 50%;
+  position: absolute;
+  left: 50px;
+  bottom: 20px;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+/* ENTIDADES DO MAPA */
+.entidade {
+  position: absolute;
+  bottom: 20px;
+}
+
+/* 1. BLOCO RETÂNGULO (Obstáculo Neutro Destruível) */
+.entidade.bloco {
+  width: 40px;
+  height: 60px;
+  background-color: #7c7c8a;
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+}
+
+/* 2. TRIÂNGULO (Espinhos / Perigo que causa Dano) */
+.entidade.espinho {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 45px solid #e83f5b;
+  filter: drop-shadow(0px 0px 4px #e83f5b);
+}
+
+/* 3. BAÚ (Recompensa / Cura) */
+.entidade.bau {
+  width: 35px;
+  height: 35px;
+  background-color: #fba94c;
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(251, 169, 76, 0.6);
+}
+
+/* ATAQUE CORPO A CORPO (FACA) */
+.faca {
+  width: 30px;
+  height: 15px;
+  background-color: #fba94c;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 30px;
+  z-index: 3;
+  box-shadow: 0 0 10px #fba94c;
+  animation: corteRapido 0.1s linear;
+}
+
+@keyframes corteRapido {
+  0% { transform: scaleX(0.2); opacity: 0.5; }
+  100% { transform: scaleX(1); opacity: 1; }
+}

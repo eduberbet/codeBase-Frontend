@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>codeBase - Aula 008: Arquitetura Modular, Entidades e Condição de Vitória</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TELA 1: MENU INICIAL -->
+  <div id="painel-menu">
+    <h2>🎮 Configurações da Partida</h2>
+    
+    <div class="campo-config">
+      <label for="input-nome">Nome do Herói:</label>
+      <input type="text" id="input-nome" placeholder="Digite o nome..." value="Valente">
+    </div>
+
+    <div class="campo-config">
+      <label for="slider-brilho">Brilho da Arena:</label>
+      <input type="range" id="slider-brilho" min="0.2" max="1" step="0.1" value="1">
+    </div>
+
+    <button id="btn-iniciar" onclick="iniciarJogo()">⚔️ Iniciar Corrida</button>
+  </div>
+
+  <!-- TELA 2: HUD E ARENA -->
+  <div id="hud" class="oculto">
+    <span id="label-heroi">Herói: Valente</span>
+    
+    <div id="barra-container">
+      <div id="barra-vida"></div>
+    </div>
+  </div>
+
+  <div id="arena" class="oculto">
+    <div id="pista">
+      <div id="heroi"></div>
+      <!-- Blocos, Espinhos e Baús injetados via JS -->
+    </div>
+  </div>
+
+  <!-- TELA 3: GAME OVER -->
+  <div id="painel-game-over" class="oculto">
+    <h2>☠️ GAME OVER</h2>
+    <p id="msg-derrota"></p>
+    <button id="btn-reiniciar" onclick="reiniciarParaMenu()">🔄 Voltar ao Menu Inicial</button>
+  </div>
+
+  <!-- TELA 4: VITÓRIA -->
+  <div id="painel-vitoria" class="oculto">
+    <h2>🏆 VITÓRIA!</h2>
+    <p id="msg-vitoria">Você destruiu todos os espinhos e limpou a pista!</p>
+    <button id="btn-vitoria" onclick="reiniciarParaMenu()">🔄 Jogar Novamente</button>
+  </div>
+
+  <!-- CARREGAMENTO DE MÓDULOS NA ORDEM CORRETA DE DEPENDÊNCIA -->
+  <script src="entidades.js"></script>
+  <script src="jogo.js"></script>
+</body>
+</html>
