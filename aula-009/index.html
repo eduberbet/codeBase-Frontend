@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>codeBase - Aula 009</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="tema-padrao">
+
+  <!-- TELA 1: MENU INICIAL -->
+  <div id="painel-menu">
+    <h2>🎮 Configurações da Partida</h2>
+    
+    <div class="campo-config">
+      <label for="input-nome">Nome do Herói:</label>
+      <input type="text" id="input-nome" placeholder="Digite o nome..." value="Valente">
+    </div>
+
+    <!-- SELETOR DE DIFICULDADE -->
+    <div class="campo-config">
+      <label for="select-dificuldade">Dificuldade:</label>
+      <select id="select-dificuldade">
+        <option value="3">Fácil (3 Espinhos)</option>
+        <option value="5" selected>Normal (5 Espinhos)</option>
+        <option value="7">Difícil (7 Espinhos)</option>
+      </select>
+    </div>
+
+    <!-- SELETOR DE TEMAS / ACESSIBILIDADE UX -->
+    <div class="campo-config">
+      <label for="select-tema">Tema de Contraste:</label>
+      <select id="select-tema">
+        <option value="tema-padrao">Padrão (Cyber Dark)</option>
+        <option value="tema-alto-contraste">Alto Contraste (A11y)</option>
+        <option value="tema-retro">Modo Retrô (Arcade)</option>
+      </select>
+    </div>
+
+    <div class="campo-config">
+      <label for="slider-brilho">Brilho da Arena:</label>
+      <input type="range" id="slider-brilho" min="0.2" max="1" step="0.1" value="1">
+    </div>
+
+    <button id="btn-iniciar" onclick="iniciarJogo()">⚔️ Iniciar Corrida</button>
+  </div>
+
+  <!-- TELA 2: HUD E ARENA -->
+  <div id="hud" class="oculto">
+    <span id="label-heroi">Herói: Valente</span>
+    <span id="label-pontos">Pontos: 0</span>
+    
+    <div id="barra-container">
+      <div id="barra-vida"></div>
+    </div>
+  </div>
+
+  <div id="arena" class="oculto">
+    <div id="pista">
+      <div id="heroi"></div>
+      <!-- Entidades injetadas via JS -->
+    </div>
+  </div>
+
+  <!-- TELA 3: GAME OVER -->
+  <div id="painel-game-over" class="oculto">
+    <h2>☠️ GAME OVER</h2>
+    <p id="msg-derrota"></p>
+    <button id="btn-reiniciar" onclick="reiniciarParaMenu()">🔄 Voltar ao Menu Inicial</button>
+  </div>
+
+  <!-- TELA 4: VITÓRIA -->
+  <div id="painel-vitoria" class="oculto">
+    <h2>🏆 VITÓRIA!</h2>
+    <p id="msg-vitoria"></p>
+    <button id="btn-vitoria" onclick="reiniciarParaMenu()">🔄 Jogar Novamente</button>
+  </div>
+
+  <!-- MÓDULOS JS (ORDEM DE DEPENDÊNCIA) -->
+  <script src="entidades.js"></script>
+  <script src="jogo.js"></script>
+</body>
+</html>
