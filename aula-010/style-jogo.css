@@ -1,0 +1,104 @@
+/* CSS MODULAR DA ARENA, ENTIDADES E MECÂNICAS */
+
+#arena {
+  width: 600px;
+  height: 300px;
+  background-color: #202024;
+  border: 2px solid #41414d;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-radius: 8px;
+}
+
+#pista {
+  width: 1800px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(90deg, #202024 0%, #18181b 100%);
+}
+
+#heroi {
+  width: 40px;
+  height: 40px;
+  background-color: #8257e5;
+  border-radius: 50%;
+  position: absolute;
+  left: 50px;
+  bottom: 20px;
+  z-index: 2;
+}
+
+/* ENTIDADES DO MAPA */
+.entidade {
+  position: absolute;
+  bottom: 20px;
+}
+
+.entidade.bloco {
+  width: 40px;
+  height: 60px;
+  background-color: #7c7c8a;
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+}
+
+.entidade.espinho {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 45px solid #e83f5b;
+}
+
+.entidade.bau {
+  width: 35px;
+  height: 35px;
+  background-color: #fba94c;
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+}
+
+/* ATAQUE HORIZONTAL DE FACA */
+.faca {
+  width: 30px;
+  height: 15px;
+  background-color: #fba94c;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 3;
+  box-shadow: 0 0 10px #fba94c;
+  animation: corteRapido 0.1s linear;
+}
+
+/* ATAQUE MERGULHADO (POUND DOWN) */
+.faca-baixo {
+  width: 15px;
+  height: 30px;
+  background-color: #e83f5b;
+  box-shadow: 0 0 12px #e83f5b;
+}
+
+/* PROJÉTIL DO ARCO (FLECHA) */
+.flecha {
+  width: 25px;
+  height: 6px;
+  background-color: #38bdf8;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 4;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.flecha.critico {
+  background-color: #e83f5b;
+  box-shadow: 0 0 15px #e83f5b;
+}
+
+@keyframes corteRapido {
+  0% { transform: scale(0.3); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
